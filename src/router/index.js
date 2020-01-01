@@ -1,14 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Index from '@/Index'
 
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    redirect: '/index/goodsList'
-  },
   {
     path: '/login',
     name: 'login',
@@ -17,6 +13,7 @@ const routes = [
   {
     path: '/index',
     name: 'index',
+    redirect: '/index/goodsList',
     component: () => import("@/Index.vue"),
     children: [
       {
@@ -36,23 +33,53 @@ const routes = [
       }
     ]
   },
+];
+// 权限路由
+const asyncRouters = [
+  // 商品模块
   {
-    path: '/',
-    name: 'home',
-    component: Home
+    path: '/index',
+    name: 'index',
+    redirect: '/index/goodsList',
+    component: Index,
+    children: [
+      {
+        path: 'goodsList',
+        name: 'goods',
+        component: () => import("@/components/goods/goodsList.vue")
+      },
+    ]
   },
+  // 订单模块
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+    path: '/index',
+    name: 'index',
+    component: Index,
+    children: [
+      {
+        path: 'order',
+        name: 'order',
+        component: () => import("@/components/order/index.vue")
+      }
+    ]
+  },
+  // 轮播图模块
+  {
+    path: '/index',
+    name: 'index',
+    component: Index,
+    children: [
+      {
+        path: 'banner',
+        name: 'banner',
+        component: () => import("@/components/banner/index.vue")
+      },
+    ]
+  },
 ]
 
 const router = new VueRouter({
-  routes
+  [...routes, ...asyncRouters]
 })
 
 export default router
