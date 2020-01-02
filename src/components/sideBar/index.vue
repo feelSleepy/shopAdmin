@@ -4,7 +4,7 @@
     <div class="content">
       <!-- 菜单 -->
       <el-menu 
-        :default-active="active" 
+        :default-active="$route.path" 
         class="el-menu-vertical-demo" 
         router
         @open="handleOpen" 
@@ -26,7 +26,6 @@ export default {
   props: ['isCollapse'],
   data() {
     return {
-      active: 'goodsList',
       navList: [
         {
           title: '商品管理',
