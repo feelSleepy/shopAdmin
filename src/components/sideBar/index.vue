@@ -30,19 +30,19 @@ export default {
       navList: [
         {
           title: '商品管理',
-          index: 'goodsList',
+          index: '/goods/goodsList',
           icon: 'el-icon-s-goods',
           name: 'goods'
         },
         {
           title: '订单管理',
-          index: 'order',
+          index: '/order/orderList',
           icon: 'el-icon-s-order',
           name: 'order'
         },
         {
           title: '轮播管理',
-          index: 'banner',
+          index: '/banner/bannerList',
           icon: 'el-icon-picture',
           name: 'banner'
         }

@@ -1,85 +1,58 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Index from '@/Index'
+import Home from '../views/Home.vue'
+import Index from '@/Index.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/',
+    redirect: '/goods'
+  },
   {
     path: '/login',
     name: 'login',
     component: () => import("@/views/Login.vue")
   },
   {
-    path: '/index',
-    name: 'index',
-    redirect: '/index/goodsList',
-    component: () => import("@/Index.vue"),
-    children: [
-      {
-        path: 'goodsList',
-        name: 'goods',
-        component: () => import("@/components/goods/goodsList.vue")
-      },
-      {
-        path: 'banner',
-        name: 'banner',
-        component: () => import("@/components/banner/index.vue")
-      },
-      {
-        path: 'order',
-        name: 'order',
-        component: () => import("@/components/order/index.vue")
-      }
-    ]
-  },
-];
-// 权限路由
-const asyncRouters = [
-  // 商品模块
-  {
-    path: '/index',
-    name: 'index',
-    redirect: '/index/goodsList',
+    path: '/goods',
+    redirect: '/goods/goodsList',
     component: Index,
     children: [
       {
         path: 'goodsList',
-        name: 'goods',
+        name: 'goodsList',
         component: () => import("@/components/goods/goodsList.vue")
-      },
+      }
     ]
   },
-  // 订单模块
   {
-    path: '/index',
-    name: 'index',
+    path: '/order',
     component: Index,
     children: [
       {
-        path: 'order',
-        name: 'order',
+        path: 'orderList',
+        name: 'orderList',
         component: () => import("@/components/order/index.vue")
       }
     ]
   },
-  // 轮播图模块
   {
-    path: '/index',
-    name: 'index',
+    path: '/banner',
     component: Index,
     children: [
       {
-        path: 'banner',
-        name: 'banner',
+        path: 'bannerList',
+        name: 'bannerList',
         component: () => import("@/components/banner/index.vue")
-      },
+      }
     ]
-  },
+  }
 ]
 
 const router = new VueRouter({
-  [...routes, ...asyncRouters]
+  routes
 })
 
 export default router
