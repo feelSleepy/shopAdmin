@@ -5,7 +5,7 @@ import Index from '@/Index.vue'
 
 Vue.use(VueRouter)
 
-const routes = [
+export const constantRoutes = [
   {
     path: '/',
     redirect: '/goods'
@@ -15,10 +15,16 @@ const routes = [
     name: 'login',
     component: () => import("@/views/Login.vue")
   },
+];
+
+export const asyncRoutes = [
   {
     path: '/goods',
     redirect: '/goods/goodsList',
     component: Index,
+    meta: {
+      roles: ['admin']
+    },
     children: [
       {
         path: 'goodsList',
@@ -30,6 +36,9 @@ const routes = [
   {
     path: '/order',
     component: Index,
+    meta: {
+      roles: ['admin']
+    },
     children: [
       {
         path: 'orderList',
@@ -41,6 +50,9 @@ const routes = [
   {
     path: '/banner',
     component: Index,
+    meta: {
+      roles: ['admin']
+    },
     children: [
       {
         path: 'bannerList',
@@ -49,10 +61,23 @@ const routes = [
       }
     ]
   }
-]
+];
 
-const router = new VueRouter({
-  routes
+const createRouter = () => new Router({
+  // mode: 'history', // require service support
+  scrollBehavior: () => ({ y: 0 }),
+  routes: constantRoutes
 })
+
+const router = createRouter()
+
+router.addRoutes(asyncRouters);
+
+// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
+export function resetRouter() {
+  const newRouter = createRouter()
+  router.matcher = newRouter.matcher // reset router
+}
+
 
 export default router

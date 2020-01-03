@@ -55,8 +55,11 @@ export default {
     handleClose(key, keyPath) {
       console.log(key, keyPath);
     }
+  },
+  mounted() {
+    console.log(this.$router);
   }
-}
+ }
 </script>
 <style lang="scss" scoped>
   .side-bar {
